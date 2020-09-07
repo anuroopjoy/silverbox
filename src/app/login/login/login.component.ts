@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IUserDetails } from './login.interfaces';
 
 @Component({
@@ -19,7 +20,9 @@ export class LoginComponent implements OnInit {
     return this.userForm.get('password');
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.userForm = this.fb.group(
@@ -31,8 +34,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.userForm.getRawValue());
-    console.log(this.userForm.valid);
+    // TO DO API Integration
+    console.log(this.router.getCurrentNavigation());
+    this.router.navigateByUrl('/logout');
   }
 
   togglePasswordView() {
