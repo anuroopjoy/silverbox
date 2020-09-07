@@ -4,14 +4,15 @@ import { RouterModule } from '@angular/router';
 import { LogoutComponent } from './logout.component';
 
 @NgModule({
-    declarations: [
-        LogoutComponent
-    ],
+    declarations: [LogoutComponent],
     imports: [
-        RouterModule.forChild([{
-            path: '', component: LogoutComponent
-        }])
+        RouterModule.forChild([
+            {
+                path: '',
+                component: LogoutComponent,
+            },
+        ]),
     ],
-    providers: []
+    providers: [],
 })
-export class LogoutModule { }
+export class LogoutModule {}
