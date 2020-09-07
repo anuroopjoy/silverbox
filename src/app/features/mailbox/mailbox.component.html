@@ -19,7 +19,7 @@
     <div class="rightmenu" style="background-color: white;">
         <ul id="myMenu">
             <ng-container *ngFor="let folder of mailFolders;let i = index; trackBy: trackByFn">
-                <li><a>{{folder.name}}
+                <li (click)="goToFolderDetails(i)"><a>{{folder.name}}
                         <ng-container *ngIf="folder.count">({{folder.count}})</ng-container>
                     </a>
                 </li>

@@ -9,6 +9,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class LandingComponent implements OnInit {
 
   public appState: any = {};
+  public selectedFolderIndex = 0;
   private defaultAppState = {
     mailbox: false,
     mailfolder: false
@@ -19,7 +20,8 @@ export class LandingComponent implements OnInit {
     this.showMailboxView();
   }
 
-  showFolderView() {
+  showFolderView(selectedFolderIndex: number) {
+    this.selectedFolderIndex = selectedFolderIndex;
     this.appState = { ...this.defaultAppState, mailfolder: true };
   }
 

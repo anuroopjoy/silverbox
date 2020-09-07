@@ -98,4 +98,8 @@ export class MailboxComponent implements OnInit {
             this.mailForm.controls.password.markAsDirty();
         }
     }
+
+    goToFolderDetails(idx: number) {
+        this.toggleClicked.emit(idx);
+    }
 }
