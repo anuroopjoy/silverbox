@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-mailfolder',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./mailfolder.component.css'],
 })
 export class MailfolderComponent implements OnInit {
-    constructor() {}
+    @Output() toggleClicked = new EventEmitter();
+    constructor() { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }
