@@ -6,16 +6,15 @@ import { MailboxComponent } from './mailbox/mailbox.component';
 import { MailfolderComponent } from './mailfolder/mailfolder.component';
 
 @NgModule({
-    declarations: [
-        LandingComponent,
-        MailboxComponent,
-        MailfolderComponent
-    ],
+    declarations: [LandingComponent, MailboxComponent, MailfolderComponent],
     imports: [
-        RouterModule.forChild([{
-            path: '', component: LandingComponent
-        }])
+        RouterModule.forChild([
+            {
+                path: '',
+                component: LandingComponent,
+            },
+        ]),
     ],
-    providers: []
+    providers: [],
 })
-export class LandingModule { }
+export class LandingModule {}

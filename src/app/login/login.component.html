@@ -9,24 +9,50 @@
                     <i class="zmdi zmdi-font"></i>
                 </span>
 
-                <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c"
-                    [ngClass]="{'alert-validate': email.invalid && email.dirty}">
-                    <input class="input100" type="email" name="email" placeholder="Email" formControlName="email">
+                <div
+                    class="wrap-input100 validate-input"
+                    data-validate="Valid email is: a@b.c"
+                    [ngClass]="{
+                        'alert-validate': email.invalid && email.dirty
+                    }"
+                >
+                    <input
+                        class="input100"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        formControlName="email"
+                    />
                 </div>
 
-                <div class="wrap-input100 validate-input" data-validate="Enter password"
-                    [ngClass]="{'alert-validate': password.invalid && password.dirty}">
+                <div
+                    class="wrap-input100 validate-input"
+                    data-validate="Enter password"
+                    [ngClass]="{
+                        'alert-validate': password.invalid && password.dirty
+                    }"
+                >
                     <span class="btn-show-pass">
-                        <i class="zmdi zmdi-eye" (click)="togglePasswordView()"></i>
+                        <i
+                            class="zmdi zmdi-eye"
+                            (click)="togglePasswordView()"
+                        ></i>
                     </span>
-                    <input class="input100" [type]="passwordType" name="pass" placeholder="Password"
-                        formControlName="password">
+                    <input
+                        class="input100"
+                        [type]="passwordType"
+                        name="pass"
+                        placeholder="Password"
+                        formControlName="password"
+                    />
                 </div>
 
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <button (click)="login()" class="login100-form-btn"> Login</button>
+                        <button (click)="login()" class="login100-form-btn">
+                            Login
+                        </button>
                     </div>
                 </div>
             </form>

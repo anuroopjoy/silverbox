@@ -20,7 +20,7 @@
 }
 
 .Loginbutton span:after {
-    content: '\00bb';
+    content: "\00bb";
     position: absolute;
     opacity: 0;
     top: 0;

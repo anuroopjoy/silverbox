@@ -1,23 +1,32 @@
 <div>
-    <br>
+    <br />
 </div>
 
 <div class="tab">
-    <button class="tablinks" onmousedown="openCity(event, 'EDW')"><i class="fa fa-fw fa-file"></i> EDW Reports
-        (25)</button>
-    <button class="tablinks" onmousedown="openCity(event, 'FIN')"><i class="fa fa-fw fa-envelope"></i> FIN Records
-        (5)</button>
-    <button class="tablinks" onmousedown="openCity(event, 'BWO')"><i class="fa fa-fw fa-folder"></i> Service
-        Requests</button>
-    <button class="tablinks" onmousedown="openCity(event, 'ORP')"><i class="fa fa-fw fa-database"></i> Database Change
-        Request</button>
+    <button class="tablinks" onmousedown="openCity(event, 'EDW')">
+        <i class="fa fa-fw fa-file"></i> EDW Reports (25)
+    </button>
+    <button class="tablinks" onmousedown="openCity(event, 'FIN')">
+        <i class="fa fa-fw fa-envelope"></i> FIN Records (5)
+    </button>
+    <button class="tablinks" onmousedown="openCity(event, 'BWO')">
+        <i class="fa fa-fw fa-folder"></i> Service Requests
+    </button>
+    <button class="tablinks" onmousedown="openCity(event, 'ORP')">
+        <i class="fa fa-fw fa-database"></i> Database Change Request
+    </button>
 </div>
 
 <div id="EDW" class="tabcontent">
-    <div class="left" style="background-color:white;">
-        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search..">
+    <div class="left" style="background-color: white;">
+        <input
+            type="text"
+            id="mySearch"
+            onkeyup="myFunction()"
+            placeholder="Search.."
+        />
     </div>
-    <div class="rightmenu" style="background-color:white;">
+    <div class="rightmenu" style="background-color: white;">
         <ul id="myMenu">
             <li><a href="#">(GT2) Daily Funding Report (10)</a></li>
             <li><a href="#">(GT2) Daily Product Selection Report (10)</a></li>
@@ -29,10 +38,15 @@
 </div>
 
 <div id="FIN" class="tabcontent">
-    <div class="left" style="background-color:white;">
-        <input type="text" id="mySearch1" onkeyup="myFunction1()" placeholder="Search..">
+    <div class="left" style="background-color: white;">
+        <input
+            type="text"
+            id="mySearch1"
+            onkeyup="myFunction1()"
+            placeholder="Search.."
+        />
     </div>
-    <div class="rightmenu" style="background-color:white;">
+    <div class="rightmenu" style="background-color: white;">
         <ul id="myMenu1">
             <li><a href="#">(GT2) Daily Reconsiliation Report</a></li>
             <li><a href="#">(GT2) Daily Product Price Report</a></li>
@@ -44,55 +58,94 @@
 </div>
 
 <div id="BWO" class="tabcontent">
-    <div class="rightmenuNoRecord" style="background-color:white;">
-        <h1><i class="fa fa-fw fa-exclamation-triangle"></i> No Reports Available</h1>
+    <div class="rightmenuNoRecord" style="background-color: white;">
+        <h1>
+            <i class="fa fa-fw fa-exclamation-triangle"></i> No Reports
+            Available
+        </h1>
     </div>
 </div>
 
 <div id="ORP" class="tabcontent">
-    <div class="rightmenuNoRecord" style="background-color:white;">
-        <h1><i class="fa fa-fw fa-exclamation-triangle"></i> No Reports Available</h1>
+    <div class="rightmenuNoRecord" style="background-color: white;">
+        <h1>
+            <i class="fa fa-fw fa-exclamation-triangle"></i> No Reports
+            Available
+        </h1>
     </div>
 </div>
 
 <div id="ADD" class="tabcontent">
-    <div class="rightmenuNoRecord" style="background-color:white;">
-        <h1><i class="fa fa-fw fa-exclamation-triangle"></i> No Reports Available</h1>
+    <div class="rightmenuNoRecord" style="background-color: white;">
+        <h1>
+            <i class="fa fa-fw fa-exclamation-triangle"></i> No Reports
+            Available
+        </h1>
     </div>
 </div>
 
 <div class="clearfix"></div>
 <div>
-    <br>
-
+    <br />
 </div>
 
-<button class="buttonPopup" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Add New
-    MailBox</button>
+<button
+    class="buttonPopup"
+    onclick="document.getElementById('id01').style.display='block'"
+    style="width: auto;"
+>
+    Add New MailBox
+</button>
 
 <div id="id01" class="modal">
-
     <form class="modal-content animate" action="/action_page.php" method="post">
         <div class="imgcontainer">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close"
-                title="Close Modal">&times;</span>
-            <img src="C:\Users\91994\Desktop\Login_v2\Login_v2\images\email.jpg" alt="Avatar" class="avatar">
+            <span
+                onclick="document.getElementById('id01').style.display='none'"
+                class="close"
+                title="Close Modal"
+                >&times;</span
+            >
+            <img
+                src="C:\Users\91994\Desktop\Login_v2\Login_v2\images\email.jpg"
+                alt="Avatar"
+                class="avatar"
+            />
         </div>
 
         <div class="container">
             <label for="Server"><b>Server</b></label>
-            <input type="text" placeholder="Enter Server Name" name="Server" required>
+            <input
+                type="text"
+                placeholder="Enter Server Name"
+                name="Server"
+                required
+            />
 
             <label for="Username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="Username" required>
+            <input
+                type="text"
+                placeholder="Enter Username"
+                name="Username"
+                required
+            />
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input
+                type="password"
+                placeholder="Enter Password"
+                name="psw"
+                required
+            />
 
             <button class="buttonPopup w3-left">Add</button>
-            <button type="Button" class="cancelbtn w3-right"
-                onclick="document.getElementById('id01').style.display='none'">Cancel</button>
+            <button
+                type="Button"
+                class="cancelbtn w3-right"
+                onclick="document.getElementById('id01').style.display='none'"
+            >
+                Cancel
+            </button>
         </div>
-
     </form>
 </div>
