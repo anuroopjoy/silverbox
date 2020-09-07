@@ -1,31 +1,17 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Lato", sans-serif;
-    margin: 50px;
-    height: 100%;
-    padding: 30px;
-}
-
-/* Style the tab */
 .tab {
     float: left;
-    background-color: white;
+    background-color: #fff;
     width: 40%;
     height: 402px;
 }
-
-/* Style the buttons inside the tab */
 .tab button {
     display: block;
     background-color: inherit;
     padding: 12px 16px;
-    color: black;
+    color: #000;
     width: 100%;
     border: none;
-    outline: none;
+    outline: 0;
     text-align: left;
     transition: all 0.5s;
     cursor: pointer;
@@ -34,168 +20,59 @@ body {
     text-decoration: none;
     font-size: 20px;
 }
-
-/* Change background color of buttons on hover */
 .tab button:hover {
     background-color: grey;
-    color: white;
+    color: #fff;
 }
-/* Create an active/current "tab button" class */
 .tab button.active {
     background-color: #0078d4;
-    color: white;
+    color: #fff;
 }
-
-/* Style the tab content */
 .tabcontent {
     float: left;
     width: 60%;
     height: 402px;
     display: none;
 }
-
-/* Clear floats after the tab */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-/* Left column (menu) */
 .left {
-    padding: 0px 40px;
+    padding: 0 40px;
 }
-
-.rightmenu {
-    padding: 0px 40px;
-}
-
-.rightmenuNoRecord {
-    padding: 120px 80px;
-}
-
-/* Style the search box */
 #mySearch {
     width: 100%;
     font-size: 18px;
     padding: 10px;
 }
-
 #mySearch1 {
     width: 100%;
     font-size: 18px;
     padding: 10px;
 }
-
-/* Style the navigation menu inside the left column */
-#myMenu {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    height: 310px;
-}
-
-#myMenu li a {
-    font-style: Normal;
-    text-decoration: none;
-    font-size: 20px;
-    color: black;
-    display: block;
-    padding: 19px;
-}
-
-#myMenu li a:hover {
-    background-color: grey;
-    color: black;
-    font-weight: bold;
-}
-
-/* Style the navigation menu inside the left column */
-#myMenu1 {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    height: 310px;
-}
-
-#myMenu1 li a {
-    font-style: Normal;
-    text-decoration: none;
-    font-size: 20px;
-    color: black;
-    display: block;
-    padding: 19px;
-}
-
-#myMenu1 li a:hover {
-    background-color: grey;
-    color: black;
-    font-weight: bold;
-}
-
-/* Style the buttons inside the tab */
-.BackToMailBoxButton {
-    background-color: #4caf50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 90px;
-    transition-duration: 0.5s;
-}
-
-/* Change background color of buttons on hover */
-.BackToMailBoxButton:hover {
-    background-color: Brown;
-    color: white;
-}
-/* Create an active/current "tab button" class */
-.BackToMailBoxButton.active {
-    background-color: #0078d4;
-    color: white;
-}
-
 .list-group-item {
     position: relative;
-    display: Block;
+    display: block;
+    float: left;
     padding: 10px 15px;
     margin-bottom: -1px;
     background-color: #fff;
     border: 1px solid #ddd;
-    font-size: 20px;
+    font-size: 16px;
 }
-
 .list-group-item:hover {
-    background-color: grey;
-    color: black;
-    font-weight: bold;
+    cursor: pointer;
 }
-
 .row {
     margin-right: -15px;
     margin-left: -15px;
 }
-
-.col-sm-12 {
-    width: 100%;
-}
-
 .left {
-    padding: 0px 40px;
+    padding: 0 40px;
 }
-
-.panel-primary {
-    border-color: #337ab7;
-}
-
 .panel {
     float: left;
     background-color: #fff;
-    width: 80%;
+    width: 100%;
     height: 402px;
 }
-
 .panel-footer {
     padding: 10px 15px;
     background-color: #f5f5f5;
@@ -203,26 +80,8 @@ body {
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
 }
-
-/* Set a style for all buttons */
-.buttonPopup_FileInfo {
-    background-color: #4caf50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: Auto;
-    transition-duration: 0.5s;
-}
-
-.buttonPopup_FileInfo:hover {
-    background-color: brown;
-}
-
-/* Full-width input fields */
-input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="text"] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -230,92 +89,9 @@ input[type="password"] {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-    background-color: grey;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 90px;
-    transition-duration: 0.5s;
-}
-
-.cancelbtn:hover,
-.cancelbtn:focus {
-    background-color: red;
-    cursor: pointer;
-}
-
-/* Center the image and position the close button */
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-    position: relative;
-}
-
-img.avatar {
-    width: 20%;
-    border-radius: 30%;
-}
-
 .container {
     padding: 16px;
 }
-
-span.psw {
-    float: right;
-    padding-top: 16px;
-}
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-    padding-top: 60px;
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: white;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    width: 20%; /* Could be more or less, depending on screen size */
-    height: 40%;
-}
-
-/* The Close Button (x) */
-.close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 35px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: red;
-    cursor: pointer;
-}
-
-/* Add Zoom Animation */
-.animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s;
-}
-
 @-webkit-keyframes animatezoom {
     from {
         -webkit-transform: scale(0);
@@ -324,7 +100,6 @@ span.psw {
         -webkit-transform: scale(1);
     }
 }
-
 @keyframes animatezoom {
     from {
         transform: scale(0);
@@ -332,4 +107,43 @@ span.psw {
     to {
         transform: scale(1);
     }
+}
+.pagination {
+    display: inline-block;
+}
+.pagination a {
+    color: #000;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+}
+.pagination a.active {
+    background-color: #4c72af;
+    color: #fff;
+}
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+.mail-subject {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.attachments {
+    margin: 8px;
+}
+.mail-selection {
+    margin-top: 0 !important;
+}
+.mail-details {
+    font-size: 12px;
+}
+.card-content {
+    padding: 2px;
+    font-family: Lato, sans-serif !important;
+}
+.right {
+    float: right;
+    clear: right;
 }

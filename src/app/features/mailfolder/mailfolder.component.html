@@ -2,60 +2,88 @@
     <br />
 </div>
 <div class="tab">
-    <button class="tablinks active" onmousedown="openCity(event, 'EDW')"><i class="fa fa-fw fa-envelope"></i> (GT2)
-        Daily Funding Report (10)</button>
-    <button class="tablinks" onmousedown="openCity(event, 'FIN')"><i class="fa fa-fw fa-envelope"></i> (GT2) Daily
-        Product Selection Report</button>
-    <button class="tablinks" onmousedown="openCity(event, 'BWO')"><i class="fa fa-fw fa-envelope"></i> (GT2) Daily
-        Linked Account Transaction</button>
-    <button class="tablinks" onmousedown="openCity(event, 'ORP')"><i class="fa fa-fw fa-envelope"></i> (GT2) Dead DDA
-        from Tax Prep</button>
-    <button class="tablinks" onmousedown="openCity(event, 'BWR')"><i class="fa fa-fw fa-envelope"></i> (GT2) Digital
-        Card Bad Address Repost</button>
+    <button class="tablinks active">
+        <i class="fa fa-fw fa-envelope"></i> (GT2) Daily Funding Report (10)
+    </button>
+    <button class="tablinks">
+        <i class="fa fa-fw fa-envelope"></i> (GT2) Daily Product Selection
+        Report
+    </button>
+    <button class="tablinks">
+        <i class="fa fa-fw fa-envelope"></i> (GT2) Daily Linked Account
+        Transaction
+    </button>
+    <button class="tablinks">
+        <i class="fa fa-fw fa-envelope"></i> (GT2) Dead DDA from Tax Prep
+    </button>
+    <button class="tablinks">
+        <i class="fa fa-fw fa-envelope"></i> (GT2) Digital Card Bad Address
+        Repost
+    </button>
 </div>
-<div id="EDW" class="tabcontent" style="display: block;">
-    <div class="left" style="background-color:white;">
-        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search..">
+<div id="EDW" class="tabcontent" style="display: block">
+    <div class="left" style="background-color: white">
+        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." />
         <div class="panel">
-            <ul class="list-group">
-                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
-                    style="display: block;">Report 01-June 2020</button>
-                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
-                    style="display: block;">Report 02-June 2020</button>
-                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
-                    style="display: block;">Report 03-June 2020</button>
-                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
-                    style="display: block;">Report 04-June 2020</button>
-                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
-                    style="display: block;">Report 05-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 06-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 07-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 08-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 09-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 10-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 11-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 12-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 13-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 14-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 15-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 16-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 17-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 18-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 19-June 2020</button>
-                <button class="list-group-item" style="display: none;">Report 20-June 2020</button>
+            <ul class="list-group" *ngFor="let item of itemsToDisplay; index as i">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <i class="fa fa-th-large" aria-hidden="true"></i>
+                            <input type="checkbox" class="mail-selection" style="margin: 1rem" />
+                        </div>
+                        <div class="col-lg-8 mail-subject">
+                            {{ item?.subject }}
+                        </div>
+                        <div class="col-lg-2 right">
+                            <i class="fa fa-download" aria-hidden="true"> </i>
+                            <a data-toggle="collapse" href="{{ '#collapseExample_' + i }}" style="margin-left: 2rem"
+                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fa" [ngClass]="{
+                                        'fa-chevron-down': item.collapse,
+                                        'fa-chevron-up': !item.collapse
+                                    }" aria-hidden="true" (click)="item.collapse = !item.collapse"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="collapse row mail-details" id="{{ 'collapseExample_' + i }}">
+                        <div class="card card-body border-light">
+                            <p class="card-content">From: {{ item?.from }}</p>
+                            <p class="card-content">Date: {{ item?.date }}</p>
+                            <p class="card-content">
+                                Subject: {{ item?.subject }}
+                            </p>
+                            <hr />
+                            <p class="card-content">
+                                <ng-container *ngFor="let attachment of item?.attachments">
+                                    <a href="" class="attachments">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                        {{ attachment }}
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </a>
+                                </ng-container>
+                                <a href="" class="attachments">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    Download All
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </li>
             </ul>
             <nav class="panel-footer">
-                <ul class="pagination">
-                    <li class="first disabled"><a href="#">First</a></li>
-                    <li class="prev disabled"><a href="#">«</a></li>
-                    <li class="page active"><a href="#">1</a></li>
-                    <li class="page"><a href="#">2</a></li>
-                    <li class="page"><a href="#">3</a></li>
-                    <li class="page"><a href="#">4</a></li>
-                    <li class="next"><a href="#">»</a></li>
-                    <li class="last"><a href="#">Last</a></li>
-                    <li class="pageNumbers"><a href="#">Page 1/4</a></li>
-                </ul>
+                <div class="pagination">
+                    <a href="#">First</a>
+                    <a href="#">&laquo;</a>
+                    <a href="#">1</a>
+                    <a href="#" class="active">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">&raquo;</a>
+                    <a href="#">Last</a>
+                    <a href="#">Page 1 of 6</a>
+                </div>
             </nav>
         </div>
     </div>
