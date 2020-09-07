@@ -1,1 +1,62 @@
-<p>mailfolder works!</p>
+<div>
+    <br />
+</div>
+<div class="tab">
+    <button class="tablinks active" onmousedown="openCity(event, 'EDW')"><i class="fa fa-fw fa-envelope"></i> (GT2)
+        Daily Funding Report (10)</button>
+    <button class="tablinks" onmousedown="openCity(event, 'FIN')"><i class="fa fa-fw fa-envelope"></i> (GT2) Daily
+        Product Selection Report</button>
+    <button class="tablinks" onmousedown="openCity(event, 'BWO')"><i class="fa fa-fw fa-envelope"></i> (GT2) Daily
+        Linked Account Transaction</button>
+    <button class="tablinks" onmousedown="openCity(event, 'ORP')"><i class="fa fa-fw fa-envelope"></i> (GT2) Dead DDA
+        from Tax Prep</button>
+    <button class="tablinks" onmousedown="openCity(event, 'BWR')"><i class="fa fa-fw fa-envelope"></i> (GT2) Digital
+        Card Bad Address Repost</button>
+</div>
+<div id="EDW" class="tabcontent" style="display: block;">
+    <div class="left" style="background-color:white;">
+        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search..">
+        <div class="panel">
+            <ul class="list-group">
+                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
+                    style="display: block;">Report 01-June 2020</button>
+                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
+                    style="display: block;">Report 02-June 2020</button>
+                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
+                    style="display: block;">Report 03-June 2020</button>
+                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
+                    style="display: block;">Report 04-June 2020</button>
+                <button class="list-group-item" onclick="document.getElementById('id01').style.display='block'"
+                    style="display: block;">Report 05-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 06-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 07-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 08-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 09-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 10-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 11-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 12-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 13-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 14-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 15-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 16-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 17-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 18-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 19-June 2020</button>
+                <button class="list-group-item" style="display: none;">Report 20-June 2020</button>
+            </ul>
+            <nav class="panel-footer">
+                <ul class="pagination">
+                    <li class="first disabled"><a href="#">First</a></li>
+                    <li class="prev disabled"><a href="#">«</a></li>
+                    <li class="page active"><a href="#">1</a></li>
+                    <li class="page"><a href="#">2</a></li>
+                    <li class="page"><a href="#">3</a></li>
+                    <li class="page"><a href="#">4</a></li>
+                    <li class="next"><a href="#">»</a></li>
+                    <li class="last"><a href="#">Last</a></li>
+                    <li class="pageNumbers"><a href="#">Page 1/4</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
