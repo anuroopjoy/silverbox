@@ -16,6 +16,7 @@ export class MailboxComponent implements OnInit {
     public mailFolders: IMailFolder[];
     public masterFolderList: IMailFolder[][];
     public searchFolder = '';
+    public showPopup = false;
     constructor() { }
 
     ngOnInit(): void {
@@ -62,5 +63,9 @@ export class MailboxComponent implements OnInit {
             this.mailFolders = this.masterFolderList[this.currentIndex].filter((folder) =>
                 folder.name.toLowerCase().includes(this.searchFolder.toLowerCase()));
         }
+    }
+
+    togglePopup(val: boolean) {
+        this.showPopup = val;
     }
 }
