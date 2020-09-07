@@ -13,7 +13,8 @@
 
 <div class="tabcontent" *ngIf="selectedMailbox.count">
     <div class="left" style="background-color: white;">
-        <input type="text" id="mySearch" [(ngModel)]="searchFolder" (keyup)="searchFolderNames()" placeholder="Search.." />
+        <input type="text" id="mySearch" [(ngModel)]="searchFolder" (keyup)="searchFolderNames()"
+            placeholder="Search.." />
     </div>
     <div class="rightmenu" style="background-color: white;">
         <ul id="myMenu">
@@ -45,27 +46,37 @@
     Add New MailBox
 </button>
 
-<div id="id01" class="modal" [hidden]="!showPopup">
-    <form class="modal-content animate">
+<div class="modal" [hidden]="!showPopup">
+    <form class="modal-content animate" [formGroup]="mailForm">
         <div class="imgcontainer">
-            <span (click)="togglePopup(false)" class="close"
-                title="Close Modal">&times;</span>
+            <span (click)="togglePopup(false)" class="close" title="Close Modal">&times;</span>
             <img src="assets/images/email.jpg" alt="Avatar" class="avatar" />
         </div>
 
         <div class="container">
             <label for="Server"><b>Server</b></label>
-            <input type="text" placeholder="Enter Server Name" name="Server" required />
+            <div class="validate-input" data-validate="Enter Server" [ngClass]="{
+                        'alert-validate': servername.invalid && servername.dirty
+                    }">
+                <input type="text" placeholder="Enter Server Name" name="Server" formControlName="servername" />
+            </div>
 
             <label for="Username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="Username" required />
+            <div class="validate-input" data-validate="Enter User name" [ngClass]="{
+                'alert-validate': username.invalid && username.dirty
+            }">
+                <input type="text" placeholder="Enter Username" name="Username" formControlName="username" />
+            </div>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required />
+            <div class="validate-input" data-validate="Enter Password" [ngClass]="{
+                'alert-validate': password.invalid && password.dirty
+            }">
+                <input type="password" placeholder="Enter Password" name="psw" formControlName="password" />
+            </div>
 
-            <button class="buttonPopup w3-left">Add</button>
-            <button type="Button" class="cancelbtn w3-right"
-                onclick="document.getElementById('id01').style.display='none'">
+            <button class="buttonPopup w3-left" (click)="addServer()">Add</button>
+            <button type="Button" class="cancelbtn w3-right" (click)="togglePopup(false)">
                 Cancel
             </button>
         </div>

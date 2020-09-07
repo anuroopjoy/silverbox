@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IMailFolder } from '../mailfolder/mailfolder.interfaces';
 import { IMailboxItem } from './mailbox.interfaces';
 
@@ -17,9 +18,25 @@ export class MailboxComponent implements OnInit {
     public masterFolderList: IMailFolder[][];
     public searchFolder = '';
     public showPopup = false;
-    constructor() { }
+
+    public mailForm: FormGroup;
+    public get servername() {
+        return this.mailForm.get('servername');
+    }
+    public get username() {
+        return this.mailForm.get('username');
+    }
+    public get password() {
+        return this.mailForm.get('password');
+    }
+    constructor(private fbr: FormBuilder) { }
 
     ngOnInit(): void {
+        this.mailForm = this.fbr.group({
+            servername: ['', Validators.required],
+            username: ['', Validators.required],
+            password: ['', Validators.required]
+        });
         // TO DO API Integration
         this.mailBoxes = [
             { name: 'EDW Reports', count: 25 },
@@ -67,5 +84,18 @@ export class MailboxComponent implements OnInit {
 
     togglePopup(val: boolean) {
         this.showPopup = val;
+    }
+
+    addServer() {
+        if (this.mailForm.valid) {
+            // TO DO API integration
+            console.log(this.mailForm.getRawValue());
+            this.showPopup = false;
+            this.mailBoxes.push({ name: this.mailForm.getRawValue().servername, count: 0 });
+        } else {
+            this.mailForm.controls.servername.markAsDirty();
+            this.mailForm.controls.username.markAsDirty();
+            this.mailForm.controls.password.markAsDirty();
+        }
     }
 }
