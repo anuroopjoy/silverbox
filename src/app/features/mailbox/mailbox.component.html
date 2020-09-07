@@ -3,79 +3,31 @@
 </div>
 
 <div class="tab">
-    <button class="tablinks" onmousedown="openCity(event, 'EDW')">
-        <i class="fa fa-fw fa-file"></i> EDW Reports (25)
-    </button>
-    <button class="tablinks" onmousedown="openCity(event, 'FIN')">
-        <i class="fa fa-fw fa-envelope"></i> FIN Records (5)
-    </button>
-    <button class="tablinks" onmousedown="openCity(event, 'BWO')">
-        <i class="fa fa-fw fa-folder"></i> Service Requests
-    </button>
-    <button class="tablinks" onmousedown="openCity(event, 'ORP')">
-        <i class="fa fa-fw fa-database"></i> Database Change Request
-    </button>
+    <ng-container *ngFor="let box of mailBoxes;let i = index; trackBy: trackByFn">
+        <button class="tablinks" (click)="showDetails(i, box)" [ngClass]="{'active': currentIndex === i}">
+            <i class=" fa fa-fw fa-envelope"></i>&nbsp;{{box.name}}
+            <ng-container *ngIf="box.count">({{box.count}})</ng-container>
+        </button>
+    </ng-container>
 </div>
 
-<div id="EDW" class="tabcontent">
+<div class="tabcontent" *ngIf="selectedMailbox.count">
     <div class="left" style="background-color: white;">
-        <input
-            type="text"
-            id="mySearch"
-            onkeyup="myFunction()"
-            placeholder="Search.."
-        />
+        <input type="text" id="mySearch" [(ngModel)]="searchFolder" (keyup)="searchFolderNames()" placeholder="Search.." />
     </div>
     <div class="rightmenu" style="background-color: white;">
         <ul id="myMenu">
-            <li><a href="#">(GT2) Daily Funding Report (10)</a></li>
-            <li><a href="#">(GT2) Daily Product Selection Report (10)</a></li>
-            <li><a href="#">(GT2) Daily Linked Account Transaction (5)</a></li>
-            <li><a href="#">(GT2) Dead DDA from Tax Prep</a></li>
-            <li><a href="#">(GT2) Digital Card Bad Address Repost</a></li>
+            <ng-container *ngFor="let folder of mailFolders;let i = index; trackBy: trackByFn">
+                <li><a>{{folder.name}}
+                        <ng-container *ngIf="folder.count">({{folder.count}})</ng-container>
+                    </a>
+                </li>
+            </ng-container>
         </ul>
     </div>
 </div>
 
-<div id="FIN" class="tabcontent">
-    <div class="left" style="background-color: white;">
-        <input
-            type="text"
-            id="mySearch1"
-            onkeyup="myFunction1()"
-            placeholder="Search.."
-        />
-    </div>
-    <div class="rightmenu" style="background-color: white;">
-        <ul id="myMenu1">
-            <li><a href="#">(GT2) Daily Reconsiliation Report</a></li>
-            <li><a href="#">(GT2) Daily Product Price Report</a></li>
-            <li><a href="#">(GT2) Weekly Price Estimator</a></li>
-            <li><a href="#">(GT2) Dead Products Revenue from Tax Prep</a></li>
-            <li><a href="#">(GT2) Emerald Card Holders Cose</a></li>
-        </ul>
-    </div>
-</div>
-
-<div id="BWO" class="tabcontent">
-    <div class="rightmenuNoRecord" style="background-color: white;">
-        <h1>
-            <i class="fa fa-fw fa-exclamation-triangle"></i> No Reports
-            Available
-        </h1>
-    </div>
-</div>
-
-<div id="ORP" class="tabcontent">
-    <div class="rightmenuNoRecord" style="background-color: white;">
-        <h1>
-            <i class="fa fa-fw fa-exclamation-triangle"></i> No Reports
-            Available
-        </h1>
-    </div>
-</div>
-
-<div id="ADD" class="tabcontent">
+<div class="tabcontent" *ngIf="!selectedMailbox.count">
     <div class="rightmenuNoRecord" style="background-color: white;">
         <h1>
             <i class="fa fa-fw fa-exclamation-triangle"></i> No Reports
@@ -89,61 +41,31 @@
     <br />
 </div>
 
-<button
-    class="buttonPopup"
-    onclick="document.getElementById('id01').style.display='block'"
-    style="width: auto;"
->
+<button class="buttonPopup" onclick="document.getElementById('id01').style.display='block'" style="width: auto;">
     Add New MailBox
 </button>
 
 <div id="id01" class="modal">
     <form class="modal-content animate" action="/action_page.php" method="post">
         <div class="imgcontainer">
-            <span
-                onclick="document.getElementById('id01').style.display='none'"
-                class="close"
-                title="Close Modal"
-                >&times;</span
-            >
-            <img
-                src="assets/images/email.jpg"
-                alt="Avatar"
-                class="avatar"
-            />
+            <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                title="Close Modal">&times;</span>
+            <img src="assets/images/email.jpg" alt="Avatar" class="avatar" />
         </div>
 
         <div class="container">
             <label for="Server"><b>Server</b></label>
-            <input
-                type="text"
-                placeholder="Enter Server Name"
-                name="Server"
-                required
-            />
+            <input type="text" placeholder="Enter Server Name" name="Server" required />
 
             <label for="Username"><b>Username</b></label>
-            <input
-                type="text"
-                placeholder="Enter Username"
-                name="Username"
-                required
-            />
+            <input type="text" placeholder="Enter Username" name="Username" required />
 
             <label for="psw"><b>Password</b></label>
-            <input
-                type="password"
-                placeholder="Enter Password"
-                name="psw"
-                required
-            />
+            <input type="password" placeholder="Enter Password" name="psw" required />
 
             <button class="buttonPopup w3-left">Add</button>
-            <button
-                type="Button"
-                class="cancelbtn w3-right"
-                onclick="document.getElementById('id01').style.display='none'"
-            >
+            <button type="Button" class="cancelbtn w3-right"
+                onclick="document.getElementById('id01').style.display='none'">
                 Cancel
             </button>
         </div>

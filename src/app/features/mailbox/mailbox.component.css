@@ -40,7 +40,7 @@
     float: left;
     width: 60%;
     height: 402px;
-    display: none;
+    display: block;
 }
 
 /* Clear floats after the tab */

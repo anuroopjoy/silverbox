@@ -3,10 +3,11 @@
 }
 
 .landing {
-    font-family: "Lato", sans-serif;
-    margin: 50px;
-    /* height: 100%; */
+    margin: 0px 50px;
     padding: 30px;
+}
+.landing *:not(.fa) {
+    font-family: "Lato", sans-serif;
 }
 /* Add Zoom Animation */
 .animate {
