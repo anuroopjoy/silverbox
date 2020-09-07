@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { LogoutComponent } from './logout.component';
 
@@ -7,6 +8,9 @@ import { LogoutComponent } from './logout.component';
         LogoutComponent
     ],
     imports: [
+        RouterModule.forChild([{
+            path: '', component: LogoutComponent
+        }])
     ],
     providers: []
 })

@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   login() {
     // TO DO API Integration
     console.log(this.router.getCurrentNavigation());
-    this.router.navigateByUrl('/logout');
+    this.router.navigateByUrl('/landing');
   }
 
   togglePasswordView() {

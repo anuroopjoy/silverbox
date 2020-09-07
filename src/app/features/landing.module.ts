@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { MailboxComponent } from './mailbox/mailbox.component';
 import { MailfolderComponent } from './mailfolder/mailfolder.component';
@@ -9,6 +10,9 @@ import { MailfolderComponent } from './mailfolder/mailfolder.component';
         MailfolderComponent
     ],
     imports: [
+        RouterModule.forChild([{
+            path: '', component: MailboxComponent
+        }])
     ],
     providers: []
 })
