@@ -40,7 +40,7 @@
     float: left;
     width: 60%;
     height: 402px;
-    display: none;
+    display: block;
 }
 
 /* Clear floats after the tab */
@@ -190,7 +190,7 @@ span.psw {
 
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
+    display: block;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;

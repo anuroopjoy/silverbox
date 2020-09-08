@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
         return this.userForm.get('password');
     }
 
-    constructor(private fb: FormBuilder, private router: Router) {}
+    constructor(private fb: FormBuilder, private router: Router) { }
 
     ngOnInit(): void {
         this.userForm = this.fb.group({
@@ -29,9 +29,14 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        // TO DO API Integration
-        console.log(this.router.getCurrentNavigation());
-        this.router.navigateByUrl('/landing');
+        if (this.userForm.valid) {
+            // TO DO API Integration
+            console.log(this.userForm.getRawValue());
+            this.router.navigateByUrl('/landing');
+        } else {
+            this.userForm.controls.email.markAsDirty();
+            this.userForm.controls.password.markAsDirty();
+        }
     }
 
     togglePasswordView() {

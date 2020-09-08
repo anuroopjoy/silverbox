@@ -21,6 +21,6 @@
             </div>
         </div>
     </Header>
-    <app-mailbox [hidden]="!appState.mailbox" (toggleClicked)="showFolderView()"></app-mailbox>
-    <app-mailfolder [hidden]="!appState.mailfolder" (toggleClicked)="showMailboxView()"></app-mailfolder>
+    <app-mailbox [hidden]="!appState.mailbox" (toggleClicked)="showFolderView($event)"></app-mailbox>
+    <app-mailfolder [hidden]="!appState.mailfolder" [selectedFolder]="selectedFolderIndex" (toggleClicked)="showMailboxView()"></app-mailfolder>
 </div>

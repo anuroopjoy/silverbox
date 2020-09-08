@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-mailfolder',
@@ -31,7 +31,10 @@ export class MailfolderComponent implements OnInit {
         'Test.7z',
     ];
 
+    @Input() selectedFolder: number;
+
     @Output() toggleClicked = new EventEmitter();
+
     constructor() { }
 
     private randomNumber(min: number, max: number) {
