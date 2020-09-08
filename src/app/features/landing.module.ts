@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -8,6 +9,7 @@ import { MailfolderComponent } from './mailfolder/mailfolder.component';
 @NgModule({
     declarations: [LandingComponent, MailboxComponent, MailfolderComponent],
     imports: [
+        CommonModule,
         RouterModule.forChild([
             {
                 path: '',
@@ -17,4 +19,4 @@ import { MailfolderComponent } from './mailfolder/mailfolder.component';
     ],
     providers: [],
 })
-export class LandingModule {}
+export class LandingModule { }
