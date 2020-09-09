@@ -73,16 +73,21 @@
             </ul>
             <nav class="panel-footer">
                 <div class="pagination">
-                    <a href="#">First</a>
-                    <a href="#">&laquo;</a>
-                    <a href="#">1</a>
-                    <a href="#" class="active">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">&raquo;</a>
-                    <a href="#">Last</a>
-                    <a href="#">Page 1 of 6</a>
+                    <a href="javascript:void(0)" (click)="setPaginationStart(0)">First</a>
+                    <a href="javascript:void(0)" (click)="setPaginationStart(paginationStartIndex - 1)">&laquo;</a>
+                    <ng-container *ngFor="let n of paginationArr; index as i">
+                        <a href="javascript:void(0)" (click)="changePage(n + 1)" [ngClass]="{
+                                active: n + 1 === pagination?.selected
+                            }">{{ n + 1 }}</a>
+                    </ng-container>
+                    <a href="javascript:void(0)" (click)="setPaginationStart(paginationStartIndex + 1)">&raquo;</a>
+                    <a href="javascript:void(0)">Last</a>
+                    <a href="javascript:void(0)">{{
+                        "Page " +
+                            pagination?.selected +
+                            " of " +
+                            pagination?.total
+                    }}</a>
                 </div>
             </nav>
         </div>
