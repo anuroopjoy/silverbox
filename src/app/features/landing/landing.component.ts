@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-landing',
@@ -14,7 +15,7 @@ export class LandingComponent implements OnInit {
     mailbox: false,
     mailfolder: false
   };
-  constructor() { }
+  constructor(private authService: MsalService) { }
 
   ngOnInit(): void {
     this.showMailboxView();
@@ -28,4 +29,8 @@ export class LandingComponent implements OnInit {
   showMailboxView() {
     this.appState = { ...this.defaultAppState, mailbox: true };
   }
+  logout() {
+    this.authService.logout();
+  }
+
 }
