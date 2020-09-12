@@ -176,3 +176,14 @@ input[type="text"] {
     float: right;
     clear: right;
 }
+
+.btn-custom {
+    background-color: #4caf50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    width: 42%;
+    transition-duration: 0.5s;
+}

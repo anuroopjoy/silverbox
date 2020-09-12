@@ -23,7 +23,15 @@
 </div>
 <div id="EDW" class="tabcontent" style="display: block">
     <div class="left" style="background-color: white">
-        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." />
+        <div class="row">
+            <div class="col-lg-8">
+                <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." />
+            </div>
+            <div class="col-lg-4">
+                <button class="btn-custom">Move</button>
+                <button class="btn-custom">Delete</button>
+            </div>
+        </div>
         <div class="panel">
             <ul class="list-group" *ngFor="let item of itemsToDisplay; index as i">
                 <li class="list-group-item">
