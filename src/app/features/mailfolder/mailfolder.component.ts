@@ -32,6 +32,7 @@ export class MailfolderComponent implements OnInit {
         selected: null,
         total: null,
         countToDisplay: null,
+        last: null
     };
     public paginationArr = [];
     public paginationStartIndex = 0;
@@ -43,26 +44,40 @@ export class MailfolderComponent implements OnInit {
     public changePage(pageNo: number) {
         const end = 5 * pageNo;
         this.itemsToDisplay = this.items.slice(end - 5, end);
-        this.pagination = {
-            selected: pageNo,
-            total: this.items.length,
-            countToDisplay: this.items.length < 5 ? this.items.length : 5,
-        };
+        this.pagination = { ...this.pagination, selected: pageNo };
     }
 
     public ngOnInit(): void {
         this.createMails();
         this.itemsToDisplay = this.items.slice(0, 5);
+        const total = this.items.length;
+        const countToDisplay = total < 5 ? 1 : 5;
         this.pagination = {
+            ...this.pagination,
             selected: 1,
-            total: this.items.length,
-            countToDisplay: this.items.length < 5 ? this.items.length : 5,
+            total,
+            countToDisplay,
+            last: Math.ceil(total / countToDisplay)
         };
         this.setPaginationStart();
     }
 
-    public setPaginationStart(start: number = 0) {
-        if (start >= 0) {
+
+    public next(dir: string = 'front') {
+        const index = dir === 'front' ?
+            this.pagination.selected + 1 : this.pagination.selected - 1;
+        const isPageAvailable = () => this.paginationArr.includes(index);
+        if (!isPageAvailable()) {
+            this.setPaginationStart(index);
+        }
+        if (isPageAvailable()) {
+            this.changePage(index);
+        }
+    }
+
+    public setPaginationStart(start: number = 1) {
+        const { last } = this.pagination;
+        if (start >= 1 && start <= last) {
             this.paginationStartIndex = start;
             this.paginationArr = Array(this.pagination.countToDisplay)
                 .fill(null)
@@ -71,7 +86,7 @@ export class MailfolderComponent implements OnInit {
     }
 
     private createMails() {
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 54; i++) {
             const date = this.randomDate(
                 new Date(2020, 0, 1),
                 new Date()

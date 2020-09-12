@@ -73,20 +73,23 @@
             </ul>
             <nav class="panel-footer">
                 <div class="pagination">
-                    <a href="javascript:void(0)" (click)="setPaginationStart(0)">First</a>
-                    <a href="javascript:void(0)" (click)="setPaginationStart(paginationStartIndex - 1)">&laquo;</a>
+                    <a href="javascript:void(0)" (click)="changePage(1); setPaginationStart()">First</a>
+                    <a href="javascript:void(0)" (click)="next('back')">&laquo;</a>
                     <ng-container *ngFor="let n of paginationArr; index as i">
-                        <a href="javascript:void(0)" (click)="changePage(n + 1)" [ngClass]="{
-                                active: n + 1 === pagination?.selected
-                            }">{{ n + 1 }}</a>
+                        <a href="javascript:void(0)" (click)="changePage(n)" [ngClass]="{
+                                active: n === pagination?.selected
+                            }">{{ n }}</a>
                     </ng-container>
-                    <a href="javascript:void(0)" (click)="setPaginationStart(paginationStartIndex + 1)">&raquo;</a>
-                    <a href="javascript:void(0)">Last</a>
+                    <a href="javascript:void(0)" (click)="next('front')">&raquo;</a>
+                    <a href="javascript:void(0)" (click)="
+                            changePage(pagination?.last);
+                            setPaginationStart(pagination?.last - pagination?.countToDisplay + 1)
+                        ">Last</a>
                     <a href="javascript:void(0)">{{
                         "Page " +
                             pagination?.selected +
                             " of " +
-                            pagination?.total
+                            pagination?.last
                     }}</a>
                 </div>
             </nav>
