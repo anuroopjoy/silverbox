@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { MsalGuard } from '@azure/msal-angular';
 
 import { LoginComponent } from './login/login.component';
 
@@ -9,14 +10,12 @@ const routes: Routes = [
     path: 'landing',
     loadChildren: () =>
       import('./features/landing.module').then((m) => m.LandingModule),
-  },
-  {
-    path: 'logout',
-    loadChildren: () =>
-      import('./logout/logout.module').then((m) => m.LogoutModule),
+    canActivate: [
+      MsalGuard
+    ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // redirect to `first-component`
-  { path: '**', component: LoginComponent },
+  { path: '**', component: LoginComponent }
 ];
 
 @NgModule({
