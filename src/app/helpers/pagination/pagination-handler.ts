@@ -1,4 +1,4 @@
-import { IPagination } from './pagination.interface';
+import { IPagination } from '../interfaces/pagination.interface';
 
 export class PaginationHandler {
     // #region Properties (4)

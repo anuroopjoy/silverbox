@@ -26,7 +26,7 @@ export class MailfolderComponent implements OnInit {
 
     // #endregion Constructors (1)
 
-    // #region Public Methods (4)
+    // #region Public Methods (5)
 
     public back() {
         const nextPage = this.pagination.getCurrentPage() - 1;
@@ -51,7 +51,11 @@ export class MailfolderComponent implements OnInit {
         this.pagination.handlePagesToShow();
     }
 
-    // #endregion Public Methods (4)
+    public toggleItemView(item: IMail) {
+        item.isCollapased = !item.isCollapased;
+    }
+
+    // #endregion Public Methods (5)
 
     // #region Private Methods (3)
 

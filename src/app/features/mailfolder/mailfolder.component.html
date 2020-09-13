@@ -50,7 +50,7 @@
                                 <i class="fa" [ngClass]="{
                                         'fa-chevron-down': item.isCollapased,
                                         'fa-chevron-up': !item.isCollapased
-                                    }" aria-hidden="true" (click)="item.collapse = !item.collapse"></i>
+                                    }" aria-hidden="true" (click)="toggleItemView(item)"></i>
                             </a>
                         </div>
                     </div>
