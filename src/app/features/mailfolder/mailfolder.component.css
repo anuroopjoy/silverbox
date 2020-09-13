@@ -141,7 +141,7 @@ input[type="text"] {
 }
 
 .pagination a.active {
-    background-color: #4c72af;
+    background-color: #0078d4;
     color: #fff;
 }
 
@@ -181,7 +181,7 @@ input[type="text"] {
     background-color: #4caf50;
     color: white;
     padding: 14px 20px;
-    margin: 8px;
+    margin: 0.25rem;
     border: none;
     cursor: pointer;
     width: 42%;

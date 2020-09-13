@@ -48,8 +48,8 @@
                             <a data-toggle="collapse" href="{{ '#collapseExample_' + i }}" style="margin-left: 2rem"
                                 role="button" aria-expanded="false" aria-controls="collapseExample">
                                 <i class="fa" [ngClass]="{
-                                        'fa-chevron-down': item.collapse,
-                                        'fa-chevron-up': !item.collapse
+                                        'fa-chevron-down': item.isCollapased,
+                                        'fa-chevron-up': !item.isCollapased
                                     }" aria-hidden="true" (click)="item.collapse = !item.collapse"></i>
                             </a>
                         </div>
@@ -81,23 +81,20 @@
             </ul>
             <nav class="panel-footer">
                 <div class="pagination">
-                    <a href="javascript:void(0)" (click)="changePage(1); setPaginationStart()">First</a>
-                    <a href="javascript:void(0)" (click)="next('back')">&laquo;</a>
-                    <ng-container *ngFor="let n of paginationArr; index as i">
+                    <a href="javascript:void(0)" (click)="changePage(1);">First</a>
+                    <a href="javascript:void(0)" (click)="back()">&laquo;</a>
+                    <ng-container *ngFor="let n of pagination?.pages index as i">
                         <a href="javascript:void(0)" (click)="changePage(n)" [ngClass]="{
-                                active: n === pagination?.selected
+                                active: n === pagination?.config.selected
                             }">{{ n }}</a>
                     </ng-container>
-                    <a href="javascript:void(0)" (click)="next('front')">&raquo;</a>
-                    <a href="javascript:void(0)" (click)="
-                            changePage(pagination?.last);
-                            setPaginationStart(pagination?.last - pagination?.countToDisplay + 1)
-                        ">Last</a>
+                    <a href="javascript:void(0)" (click)="next()">&raquo;</a>
+                    <a href="javascript:void(0)" (click)="changePage(pagination?.config.last)">Last</a>
                     <a href="javascript:void(0)">{{
                         "Page " +
-                            pagination?.selected +
+                            pagination?.config.selected +
                             " of " +
-                            pagination?.last
+                            pagination?.config.last
                     }}</a>
                 </div>
             </nav>
