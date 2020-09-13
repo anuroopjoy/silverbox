@@ -55,6 +55,10 @@
     padding: 10px;
 }
 
+.list-group {
+    min-height: 270px;
+}
+
 .list-group-item {
     position: relative;
     display: block;
