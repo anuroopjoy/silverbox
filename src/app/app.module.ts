@@ -1,15 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MsalModule, MsalInterceptor } from '@azure/msal-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { MsalInterceptor, MsalModule } from '@azure/msal-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 @NgModule({
     declarations: [AppComponent, LoginComponent],
-    imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule,
+    imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule,
         MsalModule.forRoot({
             auth: {
                 clientId: '1689ed8a-7378-492c-bb40-4c4829c54a80',

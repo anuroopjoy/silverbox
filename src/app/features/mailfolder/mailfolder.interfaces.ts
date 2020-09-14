@@ -18,3 +18,14 @@ export interface IMail {
 
     // #endregion Properties (5)
 }
+
+export interface IContentSearchResults {
+    // #region Properties (4)
+
+    content: string;
+    name: string;
+    path: string;
+    size: number;
+
+    // #endregion Properties (4)
+}

@@ -2,78 +2,73 @@
     <br />
 </div>
 <div class="tab">
-    <button class="tablinks active">
-        <i class="fa fa-fw fa-envelope"></i> (GT2) Daily Funding Report (10)
-    </button>
-    <button class="tablinks">
-        <i class="fa fa-fw fa-envelope"></i> (GT2) Daily Product Selection
-        Report
-    </button>
-    <button class="tablinks">
-        <i class="fa fa-fw fa-envelope"></i> (GT2) Daily Linked Account
-        Transaction
-    </button>
-    <button class="tablinks">
-        <i class="fa fa-fw fa-envelope"></i> (GT2) Dead DDA from Tax Prep
-    </button>
-    <button class="tablinks">
-        <i class="fa fa-fw fa-envelope"></i> (GT2) Digital Card Bad Address
-        Repost
-    </button>
+    <ng-container *ngFor="let folder of mailFolders; index as i">
+        <button class="tablinks" [ngClass]="{ active: selectedFolder === i }" (click)="changeMailFolder(i)">
+            <i class="fa fa-fw fa-envelope"></i> {{ folder?.name }}
+            <span *ngIf="selectedFolder === i">
+                {{ " (" + folder?.count + ")" }}
+            </span>
+        </button>
+    </ng-container>
 </div>
 <div id="EDW" class="tabcontent" style="display: block">
     <div class="left" style="background-color: white">
-        <div class="row">
-            <div class="col-lg-8">
-                <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." />
+        <form [formGroup]="searchForm">
+            <div class="row">
+                <div class="col-lg-8">
+                    <input type="text" id="mySearch" formControlName="keyWord" placeholder="Search.."
+                        (click)="doContentSearch()" (blur)="toggleMailsView()" />
+                </div>
+                <div class="col-lg-4">
+                    <button class="btn-custom" [disabled]="contentSearchText === ''">
+                        Search
+                    </button>
+                    <button class="btn-custom">Delete</button>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <button class="btn-custom">Move</button>
-                <button class="btn-custom">Delete</button>
-            </div>
-        </div>
-        <div class="panel">
+        </form>
+        <div *ngIf="!displayContentSearch; else contentSearchResult" class="panel">
             <ul class="list-group">
-                <li class="list-group-item" *ngFor="let item of itemsToDisplay; index as i">
+                <li class="list-group-item" *ngFor="let mail of mailsViewable; index as i">
                     <div class="row">
                         <div class="col-lg-2">
                             <i class="fa fa-th-large" aria-hidden="true"></i>
                             <input type="checkbox" class="mail-selection" style="margin: 1rem" />
                         </div>
                         <div class="col-lg-8 mail-subject">
-                            {{ item?.subject }}
+                            {{ mail?.subject }}
                         </div>
                         <div class="col-lg-2 right">
                             <i class="fa fa-download" aria-hidden="true"> </i>
                             <a data-toggle="collapse" href="{{ '#collapseExample_' + i }}" style="margin-left: 2rem"
                                 role="button" aria-expanded="false" aria-controls="collapseExample">
                                 <i class="fa" [ngClass]="{
-                                        'fa-chevron-down': item.isCollapased,
-                                        'fa-chevron-up': !item.isCollapased
-                                    }" aria-hidden="true" (click)="toggleItemView(item)"></i>
+                                        'fa-chevron-down': mail.isCollapased,
+                                        'fa-chevron-up': !mail.isCollapased
+                                    }" aria-hidden="true" (click)="toggleItemView(mail)"></i>
                             </a>
                         </div>
                     </div>
                     <div class="collapse row mail-details" id="{{ 'collapseExample_' + i }}">
                         <div class="card card-body border-light">
-                            <p class="card-content">From: {{ item?.from }}</p>
-                            <p class="card-content">Date: {{ item?.date }}</p>
+                            <p class="card-content">From: {{ mail?.from }}</p>
+                            <p class="card-content">Date: {{ mail?.date }}</p>
                             <p class="card-content">
-                                Subject: {{ item?.subject }}
+                                Subject: {{ mail?.subject }}
                             </p>
                             <hr />
                             <p class="card-content">
-                                <ng-container *ngFor="let attachment of item?.attachments">
+                                <ng-container *ngFor="let attachment of mail?.attachments">
                                     <a href="" class="attachments">
                                         <i class="fa fa-download" aria-hidden="true"></i>
                                         {{ attachment }}
                                         <i class="fa fa-paperclip" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>
-                                <a href="" class="attachments">
+                                <!-- <a href="" class="attachments">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     Download All
-                                </a>
+                                </a> -->
                             </p>
                         </div>
                     </div>
@@ -99,5 +94,12 @@
                 </div>
             </nav>
         </div>
+        <ng-template #contentSearchResult>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let result of contentSearchResults">
+                    <a [href]="result?.path">{{ result?.name + ' (' + result?.size + ' ) KB' }}</a>
+                </li>
+            </ul>
+        </ng-template>
     </div>
 </div>

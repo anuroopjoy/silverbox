@@ -17,3 +17,37 @@ export const mockFromList = [
     'arun.jose@hrblock.com',
     'kiran.cherian@hrblock.com'
 ];
+
+export const mockMailFolders = [
+    {
+        name: '(GT2) Daily Funding Report',
+        count: 0,
+        useMock: true,
+        isSelected: false
+    },
+    {
+        name: '(GT2) Daily Product Selection',
+        count: 0,
+        useMock: true,
+        isSelected: false
+    },
+    {
+        name: '(GT2) Daily Linked Account',
+        count: 0,
+        useMock: true,
+        isSelected: false
+    },
+    {
+        name: '(GT2) Dead DDA from Tax Prep',
+        count: 0,
+        useMock: true,
+        isSelected: false
+    },
+    {
+        name: '(GT2) Digital Card Bad Address',
+        count: 0,
+        useMock: true,
+        isSelected: false
+    }
+];
+

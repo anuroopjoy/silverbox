@@ -1,0 +1,8 @@
+{
+    "*": {
+        "target": "https://sliverbox.azurewebsites.net/Silverbox",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}
