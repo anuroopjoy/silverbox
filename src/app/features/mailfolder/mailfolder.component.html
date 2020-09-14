@@ -17,10 +17,10 @@
             <div class="row">
                 <div class="col-lg-8">
                     <input type="text" id="mySearch" formControlName="keyWord" placeholder="Search.."
-                        (click)="doContentSearch()" (blur)="toggleMailsView()" />
+                        (blur)="toggleMailsView()" />
                 </div>
                 <div class="col-lg-4">
-                    <button class="btn-custom" [disabled]="contentSearchText === ''">
+                    <button class="btn-custom" (click)="doContentSearch()">
                         Search
                     </button>
                     <button class="btn-custom">Delete</button>
@@ -95,9 +95,12 @@
             </nav>
         </div>
         <ng-template #contentSearchResult>
+            <p class="lead">Search Results...</p>
             <ul class="list-group">
                 <li class="list-group-item" *ngFor="let result of contentSearchResults">
-                    <a [href]="result?.path">{{ result?.name + ' (' + result?.size + ' ) KB' }}</a>
+                    <a [href]="result?.path">{{
+                        result?.name + " ( " + result?.size / 1000 + " kb )"
+                    }}</a>
                 </li>
             </ul>
         </ng-template>

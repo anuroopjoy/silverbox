@@ -74,11 +74,14 @@ export class MailfolderComponent implements OnInit {
 
     public async doContentSearch() {
         const keyWord = this.searchForm.get('keyWord').value;
-        this.contentSearchResults = [];
-        this.contentSearchResults = (
-            await this.http.get('/BlobSearch?keyWord=' + keyWord).toPromise() as IContentSearchResults[]
-        );
-        this.toggleMailsView();
+        if (keyWord) {
+            this.contentSearchResults = [];
+            this.contentSearchResults = (
+                await this.http.get('/BlobSearch?keyWord=' + keyWord)
+                    .toPromise() as IContentSearchResults[]
+            );
+            this.toggleMailsView();
+        }
     }
 
     // #endregion Public Methods (6)
