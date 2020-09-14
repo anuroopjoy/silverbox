@@ -1,11 +1,17 @@
 <div>
     <br />
+    <ol *ngIf="mailFolders" class="breadcrumb" style="cursor: pointer;">
+        <li class="breadcrumb-item"><a (click)="toggleClicked.emit();">Home</a></li>
+        <li class="breadcrumb-item">
+            <a href="#">{{ mailFolders[mailFolderIndex]?.name }}</a>
+        </li>
+    </ol>
 </div>
-<div class="tab">
+<div *ngIf="mailFolders" class="tab">
     <ng-container *ngFor="let folder of mailFolders; index as i">
-        <button class="tablinks" [ngClass]="{ active: selectedFolder === i }" (click)="changeMailFolder(i)">
+        <button class="tablinks" [ngClass]="{ active: mailFolderIndex === i }" (click)="changeMailFolder(i)">
             <i class="fa fa-fw fa-envelope"></i> {{ folder?.name }}
-            <span *ngIf="selectedFolder === i">
+            <span *ngIf="mailFolderIndex === i">
                 {{ " (" + folder?.count + ")" }}
             </span>
         </button>
@@ -23,7 +29,6 @@
                     <button class="btn-custom" (click)="doContentSearch()">
                         Search
                     </button>
-                    <button class="btn-custom">Delete</button>
                 </div>
             </div>
         </form>
@@ -52,16 +57,15 @@
                     <div class="collapse row mail-details" id="{{ 'collapseExample_' + i }}">
                         <div class="card card-body border-light">
                             <p class="card-content">From: {{ mail?.from }}</p>
-                            <p class="card-content">Date: {{ mail?.date }}</p>
                             <p class="card-content">
                                 Subject: {{ mail?.subject }}
                             </p>
                             <hr />
                             <p class="card-content">
                                 <ng-container *ngFor="let attachment of mail?.attachments">
-                                    <a href="" class="attachments">
+                                    <a [href]="attachment?.link" class="attachments">
                                         <i class="fa fa-download" aria-hidden="true"></i>
-                                        {{ attachment }}
+                                        {{ attachment?.name }}
                                         <i class="fa fa-paperclip" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>

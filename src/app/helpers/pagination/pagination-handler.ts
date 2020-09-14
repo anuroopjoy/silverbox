@@ -15,7 +15,7 @@ export class PaginationHandler {
 
     constructor(count: number) {
         const countToDisplay = count < this.MAX_PAGES ? 1 : this.MAX_PAGES;
-        const last = Math.ceil(count / countToDisplay);
+        const last = count < this.MAX_PAGES ? 1 : Math.ceil(count / countToDisplay);
         this.config = { selected: 1, total: count, countToDisplay, last };
     }
 

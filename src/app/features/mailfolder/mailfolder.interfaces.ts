@@ -3,20 +3,26 @@ export interface IMailFolder {
 
     count: number;
     name: string;
-
+    useMock?: boolean;
+    isSelected?: boolean;
     // #endregion Properties (2)
 }
 
 export interface IMail {
     // #region Properties (5)
 
-    attachments: string[];
+    attachments: IAttachment[];
     date: string;
     from: string;
     isCollapased: boolean;
     subject: string;
 
     // #endregion Properties (5)
+}
+
+export interface IAttachment {
+    name: string;
+    link: string;
 }
 
 export interface IContentSearchResults {

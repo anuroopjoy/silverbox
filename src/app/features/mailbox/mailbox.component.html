@@ -11,7 +11,7 @@
     </ng-container>
 </div>
 
-<div class="tabcontent" *ngIf="selectedMailbox.count">
+<div class="tabcontent" *ngIf="selectedMailbox?.count">
     <div class="left" style="background-color: white;">
         <input type="text" id="mySearch" [(ngModel)]="searchFolder" (keyup)="searchFolderNames()"
             placeholder="Search.." />
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="tabcontent" *ngIf="!selectedMailbox.count">
+<div class="tabcontent" *ngIf="!selectedMailbox?.count">
     <div class="rightmenuNoRecord" style="background-color: white;">
         <h1>
             <i class="fa fa-fw fa-exclamation-triangle"></i> No Reports

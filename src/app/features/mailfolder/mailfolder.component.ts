@@ -3,8 +3,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { PaginationHandler } from '../../helpers/pagination/pagination-handler';
-import { IContentSearchResults, IMail } from './mailfolder.interfaces';
-import { mockAttachmentsList, mockFromList, mockMailFolders } from './mock.data';
+import {
+    IContentSearchResults,
+    IMail,
+    IMailFolder,
+} from './mailfolder.interfaces';
+import { mockAttachmentsList, mockFromList } from './mock.data';
 
 @Component({
     selector: 'app-mailfolder',
@@ -15,15 +19,22 @@ export class MailfolderComponent implements OnInit {
     // #region Properties (7)
 
     public contentSearchText = '';
-    public mailFolders = mockMailFolders;
+    public mailFolders: IMailFolder[] = [];
     public mails: IMail[] = [];
     public mailsViewable: IMail[] = [];
     public pagination: PaginationHandler;
     public displayContentSearch = false;
     public contentSearchResults: IContentSearchResults[] = [];
-    @Input() public selectedFolder: number;
+
+    public mailFolderIndex: number;
+
     @Output() public toggleClicked = new EventEmitter();
 
+    @Input() public set selectedFolder(val: number) {
+        if (val !== undefined) {
+            this.changeMailFolder(val);
+        }
+    }
     public searchForm: FormGroup;
 
     // #endregion Properties (7)
@@ -32,7 +43,7 @@ export class MailfolderComponent implements OnInit {
 
     constructor(private fb: FormBuilder, private http: HttpClient) {
         this.searchForm = this.fb.group({
-            keyWord: ['']
+            keyWord: [''],
         });
     }
 
@@ -45,16 +56,19 @@ export class MailfolderComponent implements OnInit {
         this.changePage(nextPage);
     }
 
-    public changeMailFolder(index: number) {
-        this.selectedFolder = index;
+    public async changeMailFolder(index: number) {
+        this.mailFolderIndex = index;
         this.mails = [];
         this.mailsViewable = [];
-        this.createMails();
+        await this.getMails();
         this.initializePagination();
     }
 
     public changePage(pageNo: number) {
-        this.mailsViewable = this.pagination.getNextToDisplay(this.mails, pageNo);
+        this.mailsViewable = this.pagination.getNextToDisplay(
+            this.mails,
+            pageNo
+        );
         this.pagination.setCurrentPage(pageNo);
     }
 
@@ -63,9 +77,18 @@ export class MailfolderComponent implements OnInit {
         this.changePage(nextPage);
     }
 
-    public ngOnInit(): void {
-        this.createMails();
-        this.initializePagination();
+    public async ngOnInit() {
+        this.mailFolders = ((await this.http
+            .get('/GetSubjects')
+            .toPromise()) as [{ name: string; subjectCount: number }]).map(
+                ({ name, subjectCount }) => ({
+                    name,
+                    count: subjectCount,
+                    useMock: false,
+                    isSelected: false,
+                })
+            );
+        this.changeMailFolder(this.mailFolderIndex);
     }
 
     public toggleItemView(item: IMail) {
@@ -76,10 +99,9 @@ export class MailfolderComponent implements OnInit {
         const keyWord = this.searchForm.get('keyWord').value;
         if (keyWord) {
             this.contentSearchResults = [];
-            this.contentSearchResults = (
-                await this.http.get('/BlobSearch?keyWord=' + keyWord)
-                    .toPromise() as IContentSearchResults[]
-            );
+            this.contentSearchResults = (await this.http
+                .get('/BlobSearch?keyWord=' + keyWord)
+                .toPromise()) as IContentSearchResults[];
             this.toggleMailsView();
         }
     }
@@ -88,23 +110,49 @@ export class MailfolderComponent implements OnInit {
 
     // #region Private Methods (4)
 
-    private createMails() {
-        const folder = this.mailFolders[this.selectedFolder];
-        if (folder?.useMock) {
-            const len = this.randomNumber(10, 55);
-            for (let i = 0; i < len; i++) {
-                const date = this.randomDate(new Date(2020, 0, 1), new Date())
-                    .toLocaleDateString();
-                this.mails.push({
-                    from: mockFromList[this.randomNumber(0, 5)],
-                    subject: folder?.name + ' - ' + date,
-                    date,
-                    isCollapased: true,
-                    attachments: [mockAttachmentsList[this.randomNumber(0, 8)], mockAttachmentsList[this.randomNumber(0, 8)]]
-                });
+    private async getMails() {
+        if (this.mailFolders.length) {
+            const folder = this.mailFolders[this.mailFolderIndex];
+            if (folder?.useMock) {
+                const len = this.randomNumber(10, 55);
+                for (let i = 0; i < len; i++) {
+                    const date = this.randomDate(
+                        new Date(2020, 0, 1),
+                        new Date()
+                    ).toLocaleDateString();
+                    this.mails.push({
+                        from: mockFromList[this.randomNumber(0, 5)],
+                        subject: folder?.name + ' - ' + date,
+                        date,
+                        isCollapased: true,
+                        attachments: [
+                            { name: mockAttachmentsList[this.randomNumber(0, 8)], link: '' },
+                        ],
+                    });
+                }
+                this.mails = this.mails.sort((x, y) =>
+                    new Date(x.date) > new Date(y.date) ? -1 : 1
+                );
+                folder.count = this.mails.length;
+            } else {
+                this.mails = ((await this.http
+                    .get('/GetDetailsFromSubject' + '?subject=' + folder?.name)
+                    .toPromise()) as [
+                        {
+                            MailFrom: string;
+                            MailTo: string;
+                            Subject: string;
+                            FolderName: string;
+                            AttachmentId: string;
+                        }
+                    ]).map((result) => {
+                        const { MailFrom, Subject, FolderName, AttachmentId, } = result;
+                        return {
+                            from: MailFrom, subject: FolderName, isCollapased: true,
+                            attachments: [{ name: AttachmentId, link: `https://silverboxblob.blob.core.windows.net/silverbox/${Subject}/${FolderName}/${AttachmentId}` }],
+                        } as IMail;
+                    });
             }
-            this.mails = this.mails.sort((x, y) => new Date(x.date) > new Date(y.date) ? -1 : 1);
-            folder.count = this.mails.length;
         }
     }
 
@@ -115,11 +163,16 @@ export class MailfolderComponent implements OnInit {
     private initializePagination() {
         this.pagination = new PaginationHandler(this.mails.length);
         const currentPage = this.pagination.getCurrentPage();
-        this.mailsViewable = this.pagination.getNextToDisplay(this.mails, currentPage);
+        this.mailsViewable = this.pagination.getNextToDisplay(
+            this.mails,
+            currentPage
+        );
     }
 
     private randomDate(start: Date, end: Date) {
-        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        return new Date(
+            start.getTime() + Math.random() * (end.getTime() - start.getTime())
+        );
     }
 
     private randomNumber(min: number, max: number) {

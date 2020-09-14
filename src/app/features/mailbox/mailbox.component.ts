@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IMailFolder } from '../mailfolder/mailfolder.interfaces';
@@ -29,9 +30,9 @@ export class MailboxComponent implements OnInit {
     public get password() {
         return this.mailForm.get('password');
     }
-    constructor(private fbr: FormBuilder) { }
+    constructor(private fbr: FormBuilder, private http: HttpClient) { }
 
-    ngOnInit(): void {
+    async ngOnInit() {
         this.mailForm = this.fbr.group({
             servername: ['', Validators.required],
             username: ['', Validators.required],
@@ -44,14 +45,11 @@ export class MailboxComponent implements OnInit {
             { name: 'Service Requests', count: 0 },
             { name: 'Database Change Request', count: 0 }
         ];
+        const edwReports = (await this.http.get('/GetSubjects')
+            .toPromise() as [{ name: string, subjectCount: number }])
+            .map(({ name, subjectCount }) => ({ name, count: subjectCount }));
         this.masterFolderList = [
-            [
-                { name: '(GT2) Daily Funding Report', count: 1 },
-                { name: '(GT2) Daily Product Selection Report', count: 12 },
-                { name: '(GT2) Daily Linked Account Transaction', count: 0 },
-                { name: '(GT2) Dead DDA from Tax Prep', count: 0 },
-                { name: '(GT2) Digital Card Bad Address Repost', count: 1 }
-            ],
+            [...edwReports],
             [
                 { name: '(GT2) Daily Funding Report', count: 2 },
                 { name: '(GT2) Daily Product Selection Report', count: 15 },
