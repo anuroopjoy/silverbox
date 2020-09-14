@@ -147,15 +147,23 @@ export class MailfolderComponent implements OnInit {
                                 folderName: string;
                                 mailFrom: string;
                                 subject: string;
+                                mailContentName: string;
+                                emlFileName: string;
                             }
                         ]).map((result) => {
-                            const { mailFrom, subject, folderName, attachmentId, attachmentPath } = result;
+                            const { mailFrom, folderName, attachmentId, attachmentPath, emlFileName, mailContentName } = result;
+                            const splitArr = attachmentPath.split('/');
+                            const basePath = splitArr.splice(0, (splitArr.length - 1)).join('/');
                             return {
-                                from: mailFrom, subject: folderName, isCollapased: true,
+                                from: mailFrom,
+                                subject: folderName,
+                                isCollapased: true,
                                 attachments: [{
                                     name: attachmentId,
                                     link: attachmentPath
                                 }],
+                                emailLink: basePath + '/' + emlFileName,
+                                htmlLink: basePath + '/' + mailContentName
                             } as IMail;
                         });
                 } catch (err) {
@@ -169,6 +177,11 @@ export class MailfolderComponent implements OnInit {
 
     public toggleMailsView() {
         this.displayContentSearch = this.searchForm.get('keyWord').value;
+    }
+
+    public preview(link: string) {
+        const win = window.open();
+        win.document.write(`<iframe width="560" height="315" src="${link}" frameborder="0" allowfullscreen></iframe>`);
     }
 
     private initializePagination() {

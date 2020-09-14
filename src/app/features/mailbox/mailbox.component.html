@@ -6,7 +6,7 @@
     <ng-container *ngFor="let box of mailBoxes;let i = index; trackBy: trackByFn">
         <button class="tablinks" (click)="showDetails(i, box)" [ngClass]="{'active': currentIndex === i}">
             <i class=" fa fa-fw fa-envelope"></i>&nbsp;{{box.name}}
-            <ng-container *ngIf="box.count">({{box.count}})</ng-container>
+            <!-- <ng-container *ngIf="box.count">({{box.count}})</ng-container> -->
         </button>
     </ng-container>
 </div>
@@ -20,7 +20,7 @@
         <ul id="myMenu">
             <ng-container *ngFor="let folder of mailFolders;let i = index; trackBy: trackByFn">
                 <li (click)="goToFolderDetails(i)"><a>{{folder.name}}
-                        <ng-container *ngIf="folder.count">({{folder.count}})</ng-container>
+                        <!-- <ng-container *ngIf="folder.count">({{folder.count}})</ng-container> -->
                     </a>
                 </li>
             </ng-container>

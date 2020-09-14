@@ -16,7 +16,8 @@ export interface IMail {
     from: string;
     isCollapased: boolean;
     subject: string;
-
+    htmlLink?: string;
+    emailLink?: string;
     // #endregion Properties (5)
 }
 

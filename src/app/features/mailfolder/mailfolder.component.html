@@ -1,7 +1,9 @@
 <div>
     <br />
-    <ol *ngIf="mailFolders" class="breadcrumb" style="cursor: pointer;">
-        <li class="breadcrumb-item"><a (click)="toggleClicked.emit();">EDW Reports</a></li>
+    <ol *ngIf="mailFolders" class="breadcrumb" style="cursor: pointer">
+        <li class="breadcrumb-item">
+            <a (click)="toggleClicked.emit()">EDW Reports</a>
+        </li>
         <li class="breadcrumb-item">
             <a href="#">{{ mailFolders[mailFolderIndex]?.name }}</a>
         </li>
@@ -11,9 +13,6 @@
     <ng-container *ngFor="let folder of mailFolders; index as i">
         <button class="tablinks" [ngClass]="{ active: mailFolderIndex === i }" (click)="changeMailFolder(i)">
             <i class="fa fa-fw fa-envelope"></i> {{ folder?.name }}
-            <span *ngIf="mailFolderIndex === i">
-                {{ " (" + folder?.count + ")" }}
-            </span>
         </button>
     </ng-container>
 </div>
@@ -44,7 +43,10 @@
                             {{ mail?.subject }}
                         </div>
                         <div class="col-lg-2 right">
-                            <i class="fa fa-download" aria-hidden="true"> </i>
+                            <a [href]="mail?.emailLink">
+                                <i class="fa fa-download" aria-hidden="true">
+                                </i>
+                            </a>
                             <a data-toggle="collapse" href="{{ '#collapseExample_' + i }}" style="margin-left: 2rem"
                                 role="button" aria-expanded="false" aria-controls="collapseExample">
                                 <i class="fa" [ngClass]="{
@@ -64,15 +66,14 @@
                             <p class="card-content">
                                 <ng-container *ngFor="let attachment of mail?.attachments">
                                     <a [href]="attachment?.link" class="attachments">
-                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                        <i class="fa fa-paperclip" aria-hidden="true" style="margin-right: 2px"></i>
                                         {{ attachment?.name }}
-                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
                                     </a>
                                 </ng-container>
-                                <!-- <a href="" class="attachments">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
-                                    Download All
-                                </a> -->
+                                <a href="javascript:void(0)" class="attachments" (click)="preview(mail?.htmlLink)">
+                                    <i class="fa fa-eye" aria-hidden="true" style="margin-right: 2px"></i>
+                                    Preview
+                                </a>
                             </p>
                         </div>
                     </div>
