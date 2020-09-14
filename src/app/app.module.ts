@@ -13,8 +13,8 @@ import { LoginComponent } from './login/login.component';
     imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule,
         MsalModule.forRoot({
             auth: {
-                clientId: '1689ed8a-7378-492c-bb40-4c4829c54a80',
-                authority: 'https://login.microsoftonline.com/ecd90453-34b6-4954-926d-56ed3fdb0ca6',
+                clientId: '7810eed1-849b-414e-949d-ef3807acc75b',
+                authority: 'https://login.microsoftonline.com/10e59830-467b-4c63-8749-35eecb39379b',
                 redirectUri: 'http://localhost:4200/',
             },
             cache: {
