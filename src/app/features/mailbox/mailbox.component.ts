@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { LoaderService } from '../../services/loader.service';
 import { IMailFolder } from '../mailfolder/mailfolder.interfaces';
 import { IMailboxItem } from './mailbox.interfaces';
 
@@ -30,7 +32,7 @@ export class MailboxComponent implements OnInit {
     public get password() {
         return this.mailForm.get('password');
     }
-    constructor(private fbr: FormBuilder, private http: HttpClient) { }
+    constructor(private fbr: FormBuilder, private http: HttpClient, private loaderService: LoaderService) { }
 
     async ngOnInit() {
         this.mailForm = this.fbr.group({
@@ -45,9 +47,20 @@ export class MailboxComponent implements OnInit {
             { name: 'Service Requests', count: 0 },
             { name: 'Database Change Request', count: 0 }
         ];
-        const edwReports = (await this.http.get('/GetSubjects')
-            .toPromise() as [{ name: string, subjectCount: number }])
-            .map(({ name, subjectCount }) => ({ name, count: subjectCount }));
+
+        let edwReports: { name: string; count: number; }[] = [];
+        try {
+            this.loaderService.isLoading.next(true);
+            edwReports = (await this.http.get('/GetSubjects')
+                .toPromise() as [{ name: string, subjectCount: number }])
+                .map(({ name, subjectCount }) => ({ name, count: subjectCount }));
+        } catch (err) {
+            this.loaderService.isLoading.next(false);
+        }
+        finally {
+            this.loaderService.isLoading.next(false);
+        }
+
         this.masterFolderList = [
             [...edwReports],
             [

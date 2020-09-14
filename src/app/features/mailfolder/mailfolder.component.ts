@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoaderService } from 'src/app/services/loader.service';
 
 import { PaginationHandler } from '../../helpers/pagination/pagination-handler';
 import {
@@ -41,7 +42,7 @@ export class MailfolderComponent implements OnInit {
 
     // #region Constructors (1)
 
-    constructor(private fb: FormBuilder, private http: HttpClient) {
+    constructor(private fb: FormBuilder, private http: HttpClient, private loaderService: LoaderService) {
         this.searchForm = this.fb.group({
             keyWord: [''],
         });
@@ -78,17 +79,25 @@ export class MailfolderComponent implements OnInit {
     }
 
     public async ngOnInit() {
-        this.mailFolders = ((await this.http
-            .get('/GetSubjects')
-            .toPromise()) as [{ name: string; subjectCount: number }]).map(
-                ({ name, subjectCount }) => ({
-                    name,
-                    count: subjectCount,
-                    useMock: false,
-                    isSelected: false,
-                })
-            );
-        this.changeMailFolder(this.mailFolderIndex);
+        try {
+            this.loaderService.isLoading.next(false);
+            this.mailFolders = ((await this.http
+                .get('/GetSubjects')
+                .toPromise()) as [{ name: string; subjectCount: number }]).map(
+                    ({ name, subjectCount }) => ({
+                        name,
+                        count: subjectCount,
+                        useMock: false,
+                        isSelected: false,
+                    })
+                );
+            this.changeMailFolder(this.mailFolderIndex);
+        } catch (err) {
+            console.log(err);
+            this.loaderService.isLoading.next(false);
+        } finally {
+            this.loaderService.isLoading.next(false);
+        }
     }
 
     public toggleItemView(item: IMail) {
@@ -98,11 +107,19 @@ export class MailfolderComponent implements OnInit {
     public async doContentSearch() {
         const keyWord = this.searchForm.get('keyWord').value;
         if (keyWord) {
-            this.contentSearchResults = [];
-            this.contentSearchResults = (await this.http
-                .get('/BlobSearch?keyWord=' + keyWord)
-                .toPromise()) as IContentSearchResults[];
-            this.toggleMailsView();
+            try {
+                this.loaderService.isLoading.next(true);
+                this.contentSearchResults = [];
+                this.contentSearchResults = (await this.http
+                    .get('/BlobSearch?keyWord=' + keyWord)
+                    .toPromise()) as IContentSearchResults[];
+                this.toggleMailsView();
+            } catch (err) {
+                console.log(err);
+                this.loaderService.isLoading.next(false);
+            } finally {
+                this.loaderService.isLoading.next(false);
+            }
         }
     }
 
@@ -135,23 +152,30 @@ export class MailfolderComponent implements OnInit {
                 );
                 folder.count = this.mails.length;
             } else {
-                this.mails = ((await this.http
-                    .get('/GetDetailsFromSubject' + '?subject=' + folder?.name)
-                    .toPromise()) as [
-                        {
-                            MailFrom: string;
-                            MailTo: string;
-                            Subject: string;
-                            FolderName: string;
-                            AttachmentId: string;
-                        }
-                    ]).map((result) => {
-                        const { MailFrom, Subject, FolderName, AttachmentId, } = result;
-                        return {
-                            from: MailFrom, subject: FolderName, isCollapased: true,
-                            attachments: [{ name: AttachmentId, link: `https://silverboxblob.blob.core.windows.net/silverbox/${Subject}/${FolderName}/${AttachmentId}` }],
-                        } as IMail;
-                    });
+                try {
+                    this.loaderService.isLoading.next(true);
+                    this.mails = ((await this.http
+                        .get('/GetDetailsFromSubject' + '?subject=' + folder?.name)
+                        .toPromise()) as [
+                            {
+                                MailFrom: string;
+                                MailTo: string;
+                                Subject: string;
+                                FolderName: string;
+                                AttachmentId: string;
+                            }
+                        ]).map((result) => {
+                            const { MailFrom, Subject, FolderName, AttachmentId, } = result;
+                            return {
+                                from: MailFrom, subject: FolderName, isCollapased: true,
+                                attachments: [{ name: AttachmentId, link: `https://silverboxblob.blob.core.windows.net/silverbox/${Subject}/${FolderName}/${AttachmentId}` }],
+                            } as IMail;
+                        });
+                } catch (err) {
+                    this.loaderService.isLoading.next(false);
+                } finally {
+                    this.loaderService.isLoading.next(false);
+                }
             }
         }
     }

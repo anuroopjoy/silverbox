@@ -6,10 +6,11 @@ import { MsalInterceptor, MsalModule } from '@azure/msal-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoaderComponent } from './loader/loader.component';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent],
+    declarations: [AppComponent, LoginComponent, LoaderComponent],
     imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule,
         MsalModule.forRoot({
             auth: {
