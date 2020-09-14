@@ -1,7 +1,7 @@
 <div>
     <br />
     <ol *ngIf="mailFolders" class="breadcrumb" style="cursor: pointer;">
-        <li class="breadcrumb-item"><a (click)="toggleClicked.emit();">Home</a></li>
+        <li class="breadcrumb-item"><a (click)="toggleClicked.emit();">EDW Reports</a></li>
         <li class="breadcrumb-item">
             <a href="#">{{ mailFolders[mailFolderIndex]?.name }}</a>
         </li>
