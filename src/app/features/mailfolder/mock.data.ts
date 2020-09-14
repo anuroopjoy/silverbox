@@ -1,3 +1,5 @@
+import { IMail } from './mailfolder.interfaces';
+
 export const mockAttachmentsList = [
     'Files.zip',
     'Final.rar',
@@ -27,3 +29,36 @@ export const mockMailFolders = [
     }
 ];
 
+export function generateRandomMails(folderName: string): IMail[] {
+    const len = randomNumber(10, 55);
+    let mails: IMail[] = [];
+    for (let i = 0; i < len; i++) {
+        const date = randomDate(
+            new Date(2020, 0, 1),
+            new Date()
+        ).toLocaleDateString();
+        mails.push({
+            from: mockFromList[randomNumber(0, 5)],
+            subject: folderName + ' - ' + date,
+            date,
+            isCollapased: true,
+            attachments: [
+                { name: mockAttachmentsList[randomNumber(0, 8)], link: '' },
+            ],
+        });
+    }
+    mails = mails.sort((x, y) =>
+        new Date(x.date) > new Date(y.date) ? -1 : 1
+    );
+    return mails;
+}
+
+function randomDate(start: Date, end: Date) {
+    return new Date(
+        start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    );
+}
+
+function randomNumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min) + min);
+}

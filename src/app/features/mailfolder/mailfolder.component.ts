@@ -1,15 +1,13 @@
+import { LoaderService } from 'src/app/services/loader.service';
+import { environment } from 'src/environments/environment';
+
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LoaderService } from 'src/app/services/loader.service';
 
 import { PaginationHandler } from '../../helpers/pagination/pagination-handler';
-import {
-    IContentSearchResults,
-    IMail,
-    IMailFolder,
-} from './mailfolder.interfaces';
-import { mockAttachmentsList, mockFromList } from './mock.data';
+import { IContentSearchResults, IMail, IMailFolder } from './mailfolder.interfaces';
+import { generateRandomMails } from './mock.data';
 
 @Component({
     selector: 'app-mailfolder',
@@ -28,6 +26,8 @@ export class MailfolderComponent implements OnInit {
     public contentSearchResults: IContentSearchResults[] = [];
 
     public mailFolderIndex: number;
+
+    private serverUrl = '';
 
     @Output() public toggleClicked = new EventEmitter();
 
@@ -79,10 +79,12 @@ export class MailfolderComponent implements OnInit {
     }
 
     public async ngOnInit() {
+        const { server } = environment;
+        this.serverUrl = server;
         try {
             this.loaderService.isLoading.next(false);
             this.mailFolders = ((await this.http
-                .get('/GetSubjects')
+                .get(this.serverUrl + '/GetSubjects')
                 .toPromise()) as [{ name: string; subjectCount: number }]).map(
                     ({ name, subjectCount }) => ({
                         name,
@@ -111,7 +113,7 @@ export class MailfolderComponent implements OnInit {
                 this.loaderService.isLoading.next(true);
                 this.contentSearchResults = [];
                 this.contentSearchResults = (await this.http
-                    .get('/BlobSearch?keyWord=' + keyWord)
+                    .get(this.serverUrl + '/BlobSearch?keyWord=' + keyWord)
                     .toPromise()) as IContentSearchResults[];
                 this.toggleMailsView();
             } catch (err) {
@@ -131,44 +133,29 @@ export class MailfolderComponent implements OnInit {
         if (this.mailFolders.length) {
             const folder = this.mailFolders[this.mailFolderIndex];
             if (folder?.useMock) {
-                const len = this.randomNumber(10, 55);
-                for (let i = 0; i < len; i++) {
-                    const date = this.randomDate(
-                        new Date(2020, 0, 1),
-                        new Date()
-                    ).toLocaleDateString();
-                    this.mails.push({
-                        from: mockFromList[this.randomNumber(0, 5)],
-                        subject: folder?.name + ' - ' + date,
-                        date,
-                        isCollapased: true,
-                        attachments: [
-                            { name: mockAttachmentsList[this.randomNumber(0, 8)], link: '' },
-                        ],
-                    });
-                }
-                this.mails = this.mails.sort((x, y) =>
-                    new Date(x.date) > new Date(y.date) ? -1 : 1
-                );
+                this.mails = generateRandomMails(folder?.name);
                 folder.count = this.mails.length;
             } else {
                 try {
                     this.loaderService.isLoading.next(true);
                     this.mails = ((await this.http
-                        .get('/GetDetailsFromSubject' + '?subject=' + folder?.name)
+                        .get(this.serverUrl + '/GetDetailsFromSubject' + '?subject=' + folder?.name)
                         .toPromise()) as [
                             {
-                                MailFrom: string;
-                                MailTo: string;
-                                Subject: string;
-                                FolderName: string;
-                                AttachmentId: string;
+                                attachmentId: string;
+                                attachmentPath: string;
+                                folderName: string;
+                                mailFrom: string;
+                                subject: string;
                             }
                         ]).map((result) => {
-                            const { MailFrom, Subject, FolderName, AttachmentId, } = result;
+                            const { mailFrom, subject, folderName, attachmentId, attachmentPath } = result;
                             return {
-                                from: MailFrom, subject: FolderName, isCollapased: true,
-                                attachments: [{ name: AttachmentId, link: `https://silverboxblob.blob.core.windows.net/silverbox/${Subject}/${FolderName}/${AttachmentId}` }],
+                                from: mailFrom, subject: folderName, isCollapased: true,
+                                attachments: [{
+                                    name: attachmentId,
+                                    link: attachmentPath
+                                }],
                             } as IMail;
                         });
                 } catch (err) {
@@ -191,16 +178,6 @@ export class MailfolderComponent implements OnInit {
             this.mails,
             currentPage
         );
-    }
-
-    private randomDate(start: Date, end: Date) {
-        return new Date(
-            start.getTime() + Math.random() * (end.getTime() - start.getTime())
-        );
-    }
-
-    private randomNumber(min: number, max: number) {
-        return Math.floor(Math.random() * (max - min) + min);
     }
 
     // #endregion Private Methods (4)

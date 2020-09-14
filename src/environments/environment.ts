@@ -4,6 +4,8 @@
 
 export const environment = {
     production: false,
+    server: '',
+    appRedirect: 'http://localhost:4200/'
 };
 
 /*

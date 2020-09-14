@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MsalInterceptor, MsalModule } from '@azure/msal-angular';
+import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +17,7 @@ import { LoginComponent } from './login/login.component';
             auth: {
                 clientId: '7810eed1-849b-414e-949d-ef3807acc75b',
                 authority: 'https://login.microsoftonline.com/10e59830-467b-4c63-8749-35eecb39379b',
-                redirectUri: 'http://localhost:4200/',
+                redirectUri: environment.appRedirect,
             },
             cache: {
                 cacheLocation: 'localStorage',

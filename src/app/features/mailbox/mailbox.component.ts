@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -50,8 +52,9 @@ export class MailboxComponent implements OnInit {
 
         let edwReports: { name: string; count: number; }[] = [];
         try {
+            const server = environment.server;
             this.loaderService.isLoading.next(true);
-            edwReports = (await this.http.get('/GetSubjects')
+            edwReports = (await this.http.get(server + '/GetSubjects')
                 .toPromise() as [{ name: string, subjectCount: number }])
                 .map(({ name, subjectCount }) => ({ name, count: subjectCount }));
         } catch (err) {
