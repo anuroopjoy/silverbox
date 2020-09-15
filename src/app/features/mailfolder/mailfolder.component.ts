@@ -82,7 +82,7 @@ export class MailfolderComponent implements OnInit {
         const { server } = environment;
         this.serverUrl = server;
         try {
-            this.loaderService.isLoading.next(false);
+            this.loaderService.start();
             this.mailFolders = ((await this.http
                 .get(this.serverUrl + '/GetSubjects')
                 .toPromise()) as [{ name: string; subjectCount: number }]).map(
@@ -96,9 +96,9 @@ export class MailfolderComponent implements OnInit {
             this.changeMailFolder(this.mailFolderIndex);
         } catch (err) {
             console.log(err);
-            this.loaderService.isLoading.next(false);
+            this.loaderService.stop();
         } finally {
-            this.loaderService.isLoading.next(false);
+            this.loaderService.stop();
         }
     }
 
@@ -110,7 +110,7 @@ export class MailfolderComponent implements OnInit {
         const keyWord = this.searchForm.get('keyWord').value;
         if (keyWord) {
             try {
-                this.loaderService.isLoading.next(true);
+                this.loaderService.start();
                 this.contentSearchResults = [];
                 this.contentSearchResults = (await this.http
                     .get(this.serverUrl + '/BlobSearch?keyWord=' + keyWord)
@@ -118,9 +118,9 @@ export class MailfolderComponent implements OnInit {
                 this.toggleMailsView();
             } catch (err) {
                 console.log(err);
-                this.loaderService.isLoading.next(false);
+                this.loaderService.stop();
             } finally {
-                this.loaderService.isLoading.next(false);
+                this.loaderService.stop();
             }
         }
     }
@@ -137,7 +137,7 @@ export class MailfolderComponent implements OnInit {
                 folder.count = this.mails.length;
             } else {
                 try {
-                    this.loaderService.isLoading.next(true);
+                    this.loaderService.start();
                     this.mails = ((await this.http
                         .get(this.serverUrl + '/GetDetailsFromSubject' + '?subject=' + folder?.name)
                         .toPromise()) as [
@@ -167,9 +167,9 @@ export class MailfolderComponent implements OnInit {
                             } as IMail;
                         });
                 } catch (err) {
-                    this.loaderService.isLoading.next(false);
+                    this.loaderService.stop();
                 } finally {
-                    this.loaderService.isLoading.next(false);
+                    this.loaderService.stop();
                 }
             }
         }

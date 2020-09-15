@@ -53,15 +53,15 @@ export class MailboxComponent implements OnInit {
         let edwReports: { name: string; count: number; }[] = [];
         try {
             const server = environment.server;
-            this.loaderService.isLoading.next(true);
+            this.loaderService.start();
             edwReports = (await this.http.get(server + '/GetSubjects')
                 .toPromise() as [{ name: string, subjectCount: number }])
                 .map(({ name, subjectCount }) => ({ name, count: subjectCount }));
         } catch (err) {
-            this.loaderService.isLoading.next(false);
+            this.loaderService.stop();
         }
         finally {
-            this.loaderService.isLoading.next(false);
+            this.loaderService.stop();
         }
 
         this.masterFolderList = [

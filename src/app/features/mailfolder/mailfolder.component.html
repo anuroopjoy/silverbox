@@ -21,7 +21,7 @@
         <form [formGroup]="searchForm">
             <div class="row">
                 <div class="col-lg-8">
-                    <input type="text" id="mySearch" formControlName="keyWord" placeholder="Search.."
+                    <input type="text" id="mySearch" autocomplete="off" formControlName="keyWord" placeholder="Search.."
                         (blur)="toggleMailsView()" />
                 </div>
                 <div class="col-lg-4">
